@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<title>Ask a Question</title>
+<link rel="icon" href="/image/favicon2.png" />
+<link href="/css/style.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" />
+</head>
+<body>
+	<!-- Form to ask a question -->
+	<div class="form-container">
+		<h2>Ask the ROBOT something</h2>
+		<form id="form-ask" action="#">
+			<!-- <textarea placeholder="Your question" id="prompt"></textarea> -->
+			<input type="text" placeholder="Your question" id="prompt">
+			<input type="submit" value="Ask the question" id="btn-submit">
+		</form>
+	</div>
+
+	<div id="loading">
+		<img id="loading-image" th:src="@{/image/loading.gif}" alt="Loading..." />
+	</div>
+
+	<!-- Response field -->
+	<div id="response" class="form-container response">
+		<p id="response-message"></p>
+	</div>
+
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+	<script th:src="@{/js/home.js}"></script>
+</body>
+</html>

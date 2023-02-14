@@ -1,0 +1,84 @@
+/* Add styles for the form and background */
+body {
+	background:
+		url(https://media.giphy.com/media/xUPGcguWZHRC2HyBRS/giphy.gif)
+		no-repeat center center fixed;
+	/* background: url(https://media.giphy.com/media/paKhPtCfM7RDQyRyGf/giphy.gif) no-repeat center center fixed; */
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+
+.form-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	background-color: rgba(255, 255, 255, 0.8);
+	padding: 50px;
+	border-radius: 10px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+h2 {
+	margin-bottom: 30px;
+}
+
+input[type="text"], textarea {
+	width: 100%;
+	padding: 10px;
+	margin-bottom: 20px;
+	border-radius: 5px;
+	border: none;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+input[type="submit"] {
+	width: 100%;
+	padding: 10px;
+	background-color: blue;
+	color: white;
+	border-radius: 5px;
+	border: none;
+	cursor: pointer;
+}
+
+input[type="submit"]:hover {
+	background-color: darkblue;
+}
+
+.response {
+	margin-top: 10px;
+	text-align: center;
+	background-color: rgba(255, 255, 255, 0.8);
+	padding: 20px;
+	border-radius: 10px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	display: none;
+}
+
+#loading {
+	position: fixed;
+	display: block;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	text-align: center;
+	opacity: 0.7;
+	background-color: #fff;
+	z-index: 99;
+	display: none;
+}
+
+#loading-image {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: 30%;
+	z-index: 100;
+}

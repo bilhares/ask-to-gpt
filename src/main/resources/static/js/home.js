@@ -15,7 +15,6 @@ $("#form-ask").submit(function(evt) {
 			$("#response-message").text("");
 			$("#response").hide();
 			$('#btn-submit').prop('disabled', true);
-			$('#btn-submit').hide();
 			$('#loading').show();
 		},
 		success : function(data) {
@@ -37,7 +36,6 @@ $("#form-ask").submit(function(evt) {
 		},
 		complete : function() {
 			$('#btn-submit').prop('disabled', false);
-			$('#btn-submit').show();
 			$('#loading').hide();
 		}
 	});

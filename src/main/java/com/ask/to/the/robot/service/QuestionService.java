@@ -3,9 +3,9 @@ package com.ask.to.the.robot.service;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
-import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -32,21 +32,17 @@ public class QuestionService {
 	@Value("${OPEN_API_KEY}")
 	private String API_KEY;
 
+	@Autowired
+	private ObjectMapper mapper;
+
 	private static Logger log = LoggerFactory.getLogger(QuestionService.class);
 
-	public OpenAiResponse Ask(Question question) throws IOException {
+	public OpenAiResponse Ask(Question question) throws Exception {
 		log.info("Your question is: " + question.toString());
 
-		OkHttpClient client = new OkHttpClient.Builder().connectTimeout(10, TimeUnit.SECONDS)
-				.writeTimeout(10, TimeUnit.SECONDS).readTimeout(30, TimeUnit.SECONDS).build();
+		OkHttpClient client = buildClient();
 
-		ObjectMapper mapper = new ObjectMapper();
-		String json = mapper.writeValueAsString(new OpenAiRequestBody(question.getPrompt()));
-
-		RequestBody body = RequestBody.create(json, MEDIA_TYPE);
-
-		Request request = new Request.Builder().url(URL).addHeader("Authorization", "Bearer " + API_KEY).post(body)
-				.build();
+		Request request = getRequestBody(question);
 
 		Response response = client.newCall(request).execute();
 
@@ -56,14 +52,26 @@ public class QuestionService {
 		}
 
 		try (ResponseBody responseBody = response.body()) {
-
-			String responseString = responseBody.string();
-			JSONObject Jobject = new JSONObject(responseString);
-			OpenAiResponse data = mapper.readValue(responseString, OpenAiResponse.class);
-
-			log.info("Your response is: " + responseString);
-			return data;
+			return getResponse(responseBody);
 		}
+	}
+
+	private OpenAiResponse getResponse(ResponseBody responseBody) throws Exception {
+		String responseString = responseBody.string();
+		log.info("Your response is: " + responseString);
+		return mapper.readValue(responseString, OpenAiResponse.class);
+	}
+
+	private OkHttpClient buildClient() {
+		return new OkHttpClient.Builder().connectTimeout(10, TimeUnit.SECONDS).writeTimeout(10, TimeUnit.SECONDS)
+				.readTimeout(30, TimeUnit.SECONDS).build();
+	}
+
+	private Request getRequestBody(Question question) throws Exception {
+		String json = mapper.writeValueAsString(new OpenAiRequestBody(question.getPrompt()));
+		RequestBody body = RequestBody.create(json, MEDIA_TYPE);
+		return new Request.Builder().url(URL).addHeader("Authorization", "Bearer " + API_KEY).post(body).build();
+
 	}
 
 }
